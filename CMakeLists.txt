@@ -57,6 +57,9 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
 
 list(APPEND TEST_FILES tests/snake-ladder-test.cc)
 
+# CMakeLists.txt
+include_directories( ${PROJECT_SOURCE_DIR})
+
 ci_make_app(
         APP_NAME        board-simulator
         CINDER_PATH     ${CINDER_PATH}

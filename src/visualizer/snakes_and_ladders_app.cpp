@@ -7,11 +7,12 @@ namespace visualizer {
 SnakesAndLaddersApp::SnakesAndLaddersApp()
 {
     ci::app::setWindowSize((int) kWindowWidth, (int) kWindowHeight);
-
+    ifstream file(kFilePath);
+    file >> board;
 }
 
 void SnakesAndLaddersApp::setup() {
-    ci::fs::path path = ci::fs::path(kFilePath);
+    ci::fs::path path = ci::fs::path(kImagePath);
     texture = ci::gl::Texture::create(ci::loadImage(path));
 }
 
@@ -19,6 +20,7 @@ void SnakesAndLaddersApp::draw() {
     ci::Color background_color("white");
     ci::gl::clear(background_color);
     ci::gl::draw(texture);
+    ci::gl::drawStringCentered(to_string(board.size()), glm::vec2(1, 1), ci::Color("black"));
 }
 
 

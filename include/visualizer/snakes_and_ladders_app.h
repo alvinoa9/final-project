@@ -2,13 +2,16 @@
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
-//#include "cinder/ImageIo.h"
-//#include "cinder/gl/Texture.h"
 #include "gameplay.h"
 #include <core/game_engine.h>
 #include <algorithm>
 #include <math.h>
 #include <string>
+#include "json.hpp"
+#include <iostream>
+
+using json = nlohmann::json;
+using namespace std;
 
 namespace snakeladder {
 
@@ -31,10 +34,12 @@ public:
     const size_t kWindowHeight = 700;
     const size_t kMargin = 50;
     const ci::Font kUiFont = ci::Font("Arial", 22);
-    const int kHistogramInterval = 20;
+
 private:
-    std::string kFilePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\snlboard2.png";
+    string kImagePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\snlboard2.png";
+    string kFilePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\BoardInfo.json";
     ci::gl::Texture2dRef texture;
+    json board;
 };
 
 }  // namespace visualizer

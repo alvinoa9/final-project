@@ -1,0 +1,10 @@
+#ifndef FINAL_PROJECT_GAME_ENGINE_H
+#define FINAL_PROJECT_GAME_ENGINE_H
+
+
+class game_engine {
+
+};
+
+
+#endif //FINAL_PROJECT_GAME_ENGINE_H

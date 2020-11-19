@@ -1,0 +1,10 @@
+#ifndef FINAL_PROJECT_GAMEPLAY_H
+#define FINAL_PROJECT_GAMEPLAY_H
+
+
+class gameplay {
+
+};
+
+
+#endif //FINAL_PROJECT_GAMEPLAY_H

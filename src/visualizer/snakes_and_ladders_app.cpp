@@ -7,8 +7,17 @@ namespace visualizer {
 SnakesAndLaddersApp::SnakesAndLaddersApp()
 {
     ci::app::setWindowSize((int) kWindowWidth, (int) kWindowHeight);
+    // Deserialize json file
     ifstream file(kFilePath);
     file >> board;
+    vector<TileData> vector_temp;
+    // Insert json data to class
+    for (const auto& data : board["board"]) {
+        TileData temp_tile(data["num"], data["tile"], data["move"]);
+        vector_temp.push_back(temp_tile);
+    }
+    BoardData board_temp(vector_temp);
+    board_data = board_temp;
 }
 
 void SnakesAndLaddersApp::setup() {

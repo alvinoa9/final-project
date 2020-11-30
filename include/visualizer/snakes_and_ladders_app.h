@@ -9,6 +9,8 @@
 #include <string>
 #include "json.hpp"
 #include <iostream>
+#include "../../include/core/tile_data.h"
+#include "../../include/core/board_data.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -40,6 +42,7 @@ private:
     string kFilePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\BoardInfo.json";
     ci::gl::Texture2dRef texture;
     json board;
+    BoardData board_data;
 };
 
 }  // namespace visualizer

@@ -10,19 +10,27 @@ SnakesAndLaddersApp::SnakesAndLaddersApp()
     // Deserialize json file
     ifstream file(kFilePath);
     file >> board;
-    vector<TileData> vector_temp;
+}
+
+void SnakesAndLaddersApp::setup() {
+    ci::fs::path path = ci::fs::path(kImagePath);
+    texture = ci::gl::Texture::create(ci::loadImage(path));
+
     // Insert json data to class
+    vector<TileData> vector_temp;
+
     for (const auto& data : board["board"]) {
         TileData temp_tile(data["num"], data["tile"], data["move"]);
         vector_temp.push_back(temp_tile);
     }
     BoardData board_temp(vector_temp);
     board_data = board_temp;
-}
 
-void SnakesAndLaddersApp::setup() {
-    ci::fs::path path = ci::fs::path(kImagePath);
-    texture = ci::gl::Texture::create(ci::loadImage(path));
+    // Initialize players
+
+    for (int i = 1; i < 5; i++) {
+
+    }
 }
 
 void SnakesAndLaddersApp::draw() {

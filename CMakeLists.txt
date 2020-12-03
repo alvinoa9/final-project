@@ -53,7 +53,7 @@ list(APPEND CORE_SOURCE_FILES src/core/game_engine.cpp src/core/board_data.cpp s
 
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
         src/visualizer/snakes_and_ladders_app.cpp
-        src/visualizer/gameplay.cpp)
+        src/visualizer/board.cpp)
 
 list(APPEND TEST_FILES tests/snake-ladder-test.cc)
 

@@ -7,27 +7,13 @@ GameEngine::GameEngine() {
     total_player = 0;
 }
 
-void GameEngine::LoadPlayer(int num_players) {
-    total_player = num_players;
-    /*for (int i = 0; i < num_players; i++) {
-        Player player_temp(i + 1);
-        player_list.push_back(player_temp);
-        //player_list.emplace_back(i+1);
-    }*/
-    Player player_temp1(1);
-    player_list.push_back(player_temp1);
-}
-
 GameEngine::GameEngine(int num_players) {
     JSONDeserialize();
     total_player = num_players;
     for (int i = 0; i < num_players; i++) {
         Player player_temp(i + 1);
         player_list.push_back(player_temp);
-        //player_list.emplace_back(i+1);
     }
-    //Player player_temp1(1);
-    //player_list.push_back(player_temp1);
 }
 
 void GameEngine::JSONDeserialize() {
@@ -52,54 +38,79 @@ string GameEngine::run(int dice) {
     glm::vec2 position = current.GetPosition();
     int tile = current.GetTile();
     int move = tile + dice;
-    TileData tile_landed = tile_data[dice + tile - 1];
+
+    // Checks if move is out of board
+    if (move > 100) {
+        move = 100 - (move - 100);
+    }
+
+    TileData tile_landed = tile_data[move - 1];
     string tile_type = tile_landed.GetTile();
-    string status = "";
-    // If tile landed is a snake
+    string status;
+
+    // If tile is snake
     if (tile_type == "snake") {
         move = tile_landed.GetMove();
-        status = "Player " + to_string(curr_player) + " have landed on a snake, move to tile " + to_string(move) + "!";
-        for (int i = tile; i >= move; i--) {
-            if (i % 10 == 0) {
-                position += glm::vec2(0, 70);
-            } else if (i % 20 > 10){
-                position += glm::vec2(70, 0);
-            } else {
-                position -= glm::vec2(70, 0);
-            }
-        }
+        status = "Player " + to_string(curr_player + 1) + " have landed on a snake, move to tile " + to_string(move) + "!";
+        position = MoveDown(tile, move, position);
     }
+    // If tile is a ladder
+    else if (tile_type == "ladder") {
+        move = tile_landed.GetMove();
+        status = "Player " + to_string(curr_player + 1) + " have landed on a ladder, move to tile " + to_string(move) + "!";
+        position = MoveUp(tile, move, position);
+    }
+    // Move normally
     else {
-        // If tile landed is ladder
-        if (tile_type == "ladder") {
-            move = tile_landed.GetMove();
-            status = "Player " + to_string(curr_player) + " have landed on a ladder, move to tile " + to_string(move) + "!";
-        } else {
-            status = "Player " + to_string(curr_player) + " have landed on tile " + to_string(move) + "!";
+        if (move > tile) {
+            position = MoveUp(tile, move, position);
         }
-        for (int i = tile; i <= move; i++) {
-            if (i % 10 == 0) {
-                position -= glm::vec2(0, 70);
-            } else if (i % 20 > 10){
-                position -= glm::vec2(70, 0);
-            } else {
-                position += glm::vec2(70, 0);
-            }
+        else {
+            position = MoveDown(tile, move, position);
         }
+        status = "Player " + to_string(curr_player + 1) + " have landed on tile " + to_string(move) + "!";
+
     }
+
+    if (move == 100) {
+        status = "Player " + to_string(curr_player + 1) + " reached tile 100 and WON!";
+    }
+
     current.SetTile(move);
     current.SetPosition(position);
-    current.SetTile(dice + tile);
     player_list[curr_player] = current;
-    curr_player++;
-    if (curr_player >= total_player + 1) {
-        curr_player = 1;
-    }
+    curr_player = (curr_player + 1) % total_player;
     return status;
 }
 
 vector<Player> GameEngine::GetPlayerList() {
     return player_list;
+}
+
+glm::vec2 GameEngine::MoveDown(int tile, int move, glm::vec2 position) {
+    for (int i = tile - 1; i >= move; --i) {
+        if (i % 10 == 0) {
+            position += glm::vec2(0, 70);
+        } else if (i % 20 > 10){
+            position += glm::vec2(70, 0);
+        } else {
+            position -= glm::vec2(70, 0);
+        }
+    }
+    return position;
+}
+
+glm::vec2 GameEngine::MoveUp(int tile, int move, glm::vec2 position) {
+    for (int i = tile; i < move; i++) {
+        if (i % 10 == 0) {
+            position -= glm::vec2(0, 70);
+        } else if (i % 20 > 10){
+            position -= glm::vec2(70, 0);
+        } else {
+            position += glm::vec2(70, 0);
+        }
+    }
+    return position;
 }
 
 }   // namespace snakeladder

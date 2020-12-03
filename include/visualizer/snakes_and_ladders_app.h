@@ -2,18 +2,18 @@
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
-#include "gameplay.h"
+#include "board.h"
 #include <core/game_engine.h>
 #include <algorithm>
 #include <math.h>
 #include <string>
-#include "json.hpp"
 #include <iostream>
 #include <stdlib.h>
+#include <random>
 #include "../../include/core/tile_data.h"
 #include "../../include/core/board_data.h"
+#include "../../include/visualizer/board.h"
 
-using json = nlohmann::json;
 using namespace std;
 
 namespace snakeladder {
@@ -31,22 +31,45 @@ public:
     void draw() override;
     void setup() override;
     void keyDown(ci::app::KeyEvent event) override;
+    void mouseDown(ci::app::MouseEvent event) override;
 
     const size_t kWindowSize = 700;
-    const size_t kWindowWidth = 800;
-    const size_t kWindowHeight = 700;
+    const double kWindowWidth = 800;
+    const double kWindowHeight = 700;
     const size_t kMargin = 50;
     const ci::Font kUiFont = ci::Font("Arial", 22);
 
 private:
-    int RollDice();
+    /**
+     * Random number generator from 1 to 6
+     * @return roll number
+     */
+    static int RollDice();
 
+    /**
+     * Resets game
+     */
+    void reset();
+
+    /**
+     * Draws dice
+     * @param dice number rolled
+     */
+    void DrawDice(int dice);
+
+    /**
+     * Draws players
+     * @param players
+     */
+    void DrawGamePiece(vector<Player> players);
+
+    Board board_;
+    int state = 0;
     GameEngine game;
+    string status = "";
     string kImagePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\snlboard2.png";
     string kFilePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\BoardInfo.json";
     ci::gl::Texture2dRef texture;
-    //json board;
-    //BoardData board_data;
     bool start = false;
     int player = 1;
     int dice = 1;

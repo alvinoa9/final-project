@@ -5,14 +5,11 @@ namespace snakeladder{
 namespace visualizer {
 
 SnakesAndLaddersApp::SnakesAndLaddersApp()
+    : board_(kWindowWidth, kWindowHeight)
 {
     ci::app::setWindowSize((int) kWindowWidth, (int) kWindowHeight);
-    // Deserialize json file
-    //ifstream file(kFilePath);
-    //file >> board;
-    GameEngine temp_game(4);
+    GameEngine temp_game(player);
     game = temp_game;
-    //game.LoadPlayer(player);
 }
 
 void SnakesAndLaddersApp::setup() {
@@ -44,47 +41,61 @@ void SnakesAndLaddersApp::setup() {
     player3 = ci::gl::Texture::create(ci::loadImage(player3_path));
     ci::fs::path player4_path = ci::fs::path(kPlayer4);
     player4 = ci::gl::Texture::create(ci::loadImage(player4_path));
-
-    // Insert json data to class
-    /*vector<TileData> vector_temp;
-
-    for (const auto& data : board["board"]) {
-        TileData temp_tile(data["num"], data["tile"], data["move"]);
-        vector_temp.push_back(temp_tile);
-    }
-    BoardData board_temp(vector_temp);
-    board_data = board_temp;*/
 }
 
 void SnakesAndLaddersApp::draw() {
     // Draw Background
     ci::Color background_color("white");
     ci::gl::clear(background_color);
-
+    board_.Draw();
     // Draw board
-    ci::gl::color(ci::Color("white"));
-    ci::gl::draw(texture);
+    //ci::gl::color(ci::Color("white"));
+    //ci::gl::draw(texture);
     //ci::gl::drawStringCentered(to_string(board.size()), glm::vec2(1, 1), ci::Color("black"));
 
-    // Draw initial pieces
-    if (!start) {
-        for (size_t i = 0; i < player_list.size(); i++) {
-            if (i == 0) {
-                ci::gl::draw(player1, player_list[i].GetPosition());
-            }
-            else if (i == 1) {
-                ci::gl::draw(player2, player_list[i].GetPosition());
-            }
-            else if (i == 2) {
-                ci::gl::draw(player3, player_list[i].GetPosition());
-            }
-            else if (i == 3) {
-                ci::gl::draw(player4, player_list[i].GetPosition());
-            }
-        }
-    }
-
     // Draw dice
+    //DrawDice(dice);
+
+    // Draw Players
+    //DrawGamePiece(game.GetPlayerList());
+
+
+    //ci::gl::drawString(status, glm::vec2(0, 0), ci::Color("black"), kUiFont);
+}
+
+int SnakesAndLaddersApp::RollDice() {
+    random_device generator;
+    uniform_int_distribution<int> distribution(1,6);
+    int roll = distribution(generator);
+    return roll;
+}
+
+void SnakesAndLaddersApp::keyDown(ci::app::KeyEvent event) {
+    switch (event.getCode()) {
+        // Reset game
+        case ci::app::KeyEvent::KEY_r:
+            reset();
+            break;
+
+        case ci::app::KeyEvent::KEY_DOWN:
+            break;
+    }
+}
+
+void SnakesAndLaddersApp::mouseDown(ci::app::MouseEvent event) {
+    if (event.getPos().x >= 700 && event.getPos().y >= 600) {
+        start = true;
+        dice = RollDice();
+        status = game.run(dice);
+    }
+}
+
+void SnakesAndLaddersApp::reset() {
+    GameEngine temp_game(player);
+    game = temp_game;
+}
+
+void SnakesAndLaddersApp::DrawDice(int dice) {
     ci::gl::color(ci::Color("white"));
     if (dice == 1) {
         ci::gl::draw(dice1, glm::vec2(700, 600));
@@ -104,49 +115,30 @@ void SnakesAndLaddersApp::draw() {
     else if (dice == 6) {
         ci::gl::draw(dice6, glm::vec2(700, 600));
     }
-    string status;
+
     if (start) {
         ci::gl::drawStringCentered("You rolled " + to_string(dice) + "!", glm::vec2(750, 580), ci::Color("black"), kUiFont);
-        //status = game.run(dice);
     }
     ci::Rectf dice_outline(glm::vec2(700, 600), glm::vec2(800, 700));
     ci::gl::color(ci::Color("black"));
     ci::gl::drawStrokedRect(dice_outline);
+}
 
-    vector<Player> player_list = game.GetPlayerList();
+void SnakesAndLaddersApp::DrawGamePiece(vector<Player> player_list) {
     ci::gl::color(ci::Color("white"));
     for (size_t i = 0; i < player_list.size(); i++) {
         if (i == 0) {
-            ci::gl::draw(player1, player_list[i].GetPosition());
+            ci::gl::draw(player1, player_list[0].GetPosition());
         }
         else if (i == 1) {
-            ci::gl::draw(player2, player_list[i].GetPosition());
+            ci::gl::draw(player2, player_list[1].GetPosition());
         }
         else if (i == 2) {
-            ci::gl::draw(player3, player_list[i].GetPosition());
+            ci::gl::draw(player3, player_list[2].GetPosition());
         }
         else if (i == 3) {
-            ci::gl::draw(player4, player_list[i].GetPosition());
+            ci::gl::draw(player4, player_list[3].GetPosition());
         }
-    }
-}
-
-int SnakesAndLaddersApp::RollDice() {
-    //Generate number between 1 and 6
-    int roll = rand() % 6 + 1;
-    return roll;
-}
-
-void SnakesAndLaddersApp::keyDown(ci::app::KeyEvent event) {
-    switch (event.getCode()) {
-        // Roll dice
-        case ci::app::KeyEvent::KEY_r:
-            start = true;
-            dice = RollDice();
-            break;
-
-        case ci::app::KeyEvent::KEY_DOWN:
-            break;
     }
 }
 

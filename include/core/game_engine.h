@@ -42,17 +42,34 @@ public:
      */
     vector<Player> GetPlayerList();
 
-    void LoadPlayer(int num_players);
-
 private:
     /**
      * Deserialize json file
      */
     void JSONDeserialize();
+
+    /**
+     * Move game piece up
+     * @param tile tile number
+     * @param move move to tile
+     * @param position of current piece
+     * @return new position
+     */
+    glm::vec2 MoveUp(int tile, int move, glm::vec2 position);
+
+    /**
+     * Move game piece down
+     * @param tile tile number
+     * @param move move to tile
+     * @param position of current piece
+     * @return new position
+     */
+    glm::vec2 MoveDown(int tile, int move, glm::vec2 position);
+
     int total_player;
     vector<TileData> tile_data;
     vector<Player> player_list;
-    int curr_player = 1;
+    int curr_player = 0;
     BoardData board_data;
     string kFilePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\BoardInfo.json";
     json board;

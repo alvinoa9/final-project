@@ -10,7 +10,7 @@ SnakesAndLaddersApp::SnakesAndLaddersApp()
     // Deserialize json file
     ifstream file(kFilePath);
     file >> board;
-    GameEngine temp_game(1);
+    GameEngine temp_game(player);
     game = temp_game;
 }
 
@@ -46,12 +46,16 @@ void SnakesAndLaddersApp::setup() {
 }
 
 void SnakesAndLaddersApp::draw() {
+    // Draw Background
     ci::Color background_color("white");
     ci::gl::clear(background_color);
+
+    // Draw board
     ci::gl::color(ci::Color("white"));
     ci::gl::draw(texture);
     //ci::gl::drawStringCentered(to_string(board.size()), glm::vec2(1, 1), ci::Color("black"));
 
+    // Draw dice
     ci::gl::color(ci::Color("white"));
     if (dice == 1) {
         ci::gl::draw(dice1, glm::vec2(700, 600));
@@ -77,6 +81,8 @@ void SnakesAndLaddersApp::draw() {
     ci::Rectf dice_outline(glm::vec2(700, 600), glm::vec2(800, 700));
     ci::gl::color(ci::Color("black"));
     ci::gl::drawStrokedRect(dice_outline);
+
+    string status = game.run(dice);
 
     //ci::gl::drawLine(glm::vec2(700, 700), glm::vec2(800, 700));
 }

@@ -30,8 +30,10 @@ public:
 
     /**
      * Runs the game
+     * @param dice moves of player
+     * @return string of player's move
      */
-    void run(int dice);
+    string run(int dice);
 
 private:
     /**

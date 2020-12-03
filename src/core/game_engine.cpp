@@ -4,6 +4,18 @@ namespace snakeladder {
 
 GameEngine::GameEngine() {
     JSONDeserialize();
+    total_player = 0;
+}
+
+void GameEngine::LoadPlayer(int num_players) {
+    total_player = num_players;
+    /*for (int i = 0; i < num_players; i++) {
+        Player player_temp(i + 1);
+        player_list.push_back(player_temp);
+        //player_list.emplace_back(i+1);
+    }*/
+    Player player_temp1(1);
+    player_list.push_back(player_temp1);
 }
 
 GameEngine::GameEngine(int num_players) {
@@ -12,7 +24,10 @@ GameEngine::GameEngine(int num_players) {
     for (int i = 0; i < num_players; i++) {
         Player player_temp(i + 1);
         player_list.push_back(player_temp);
+        //player_list.emplace_back(i+1);
     }
+    //Player player_temp1(1);
+    //player_list.push_back(player_temp1);
 }
 
 void GameEngine::JSONDeserialize() {
@@ -46,7 +61,7 @@ string GameEngine::run(int dice) {
         status = "Player " + to_string(curr_player) + " have landed on a snake, move to tile " + to_string(move) + "!";
         for (int i = tile; i >= move; i--) {
             if (i % 10 == 0) {
-                position -= glm::vec2(0, 70);
+                position += glm::vec2(0, 70);
             } else if (i % 20 > 10){
                 position += glm::vec2(70, 0);
             } else {
@@ -64,7 +79,7 @@ string GameEngine::run(int dice) {
         }
         for (int i = tile; i <= move; i++) {
             if (i % 10 == 0) {
-                position += glm::vec2(0, 70);
+                position -= glm::vec2(0, 70);
             } else if (i % 20 > 10){
                 position -= glm::vec2(70, 0);
             } else {
@@ -72,7 +87,7 @@ string GameEngine::run(int dice) {
             }
         }
     }
-
+    current.SetTile(move);
     current.SetPosition(position);
     current.SetTile(dice + tile);
     player_list[curr_player] = current;
@@ -81,6 +96,10 @@ string GameEngine::run(int dice) {
         curr_player = 1;
     }
     return status;
+}
+
+vector<Player> GameEngine::GetPlayerList() {
+    return player_list;
 }
 
 }   // namespace snakeladder

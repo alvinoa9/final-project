@@ -8,10 +8,11 @@ SnakesAndLaddersApp::SnakesAndLaddersApp()
 {
     ci::app::setWindowSize((int) kWindowWidth, (int) kWindowHeight);
     // Deserialize json file
-    ifstream file(kFilePath);
-    file >> board;
-    GameEngine temp_game(player);
+    //ifstream file(kFilePath);
+    //file >> board;
+    GameEngine temp_game(4);
     game = temp_game;
+    //game.LoadPlayer(player);
 }
 
 void SnakesAndLaddersApp::setup() {
@@ -34,15 +35,25 @@ void SnakesAndLaddersApp::setup() {
     ci::fs::path dice_path6 = ci::fs::path(kDice6);
     dice6 = ci::gl::Texture::create(ci::loadImage(dice_path6));
 
+    // Load Player models
+    ci::fs::path player1_path = ci::fs::path(kPlayer1);
+    player1 = ci::gl::Texture::create(ci::loadImage(player1_path));
+    ci::fs::path player2_path = ci::fs::path(kPlayer2);
+    player2 = ci::gl::Texture::create(ci::loadImage(player2_path));
+    ci::fs::path player3_path = ci::fs::path(kPlayer3);
+    player3 = ci::gl::Texture::create(ci::loadImage(player3_path));
+    ci::fs::path player4_path = ci::fs::path(kPlayer4);
+    player4 = ci::gl::Texture::create(ci::loadImage(player4_path));
+
     // Insert json data to class
-    vector<TileData> vector_temp;
+    /*vector<TileData> vector_temp;
 
     for (const auto& data : board["board"]) {
         TileData temp_tile(data["num"], data["tile"], data["move"]);
         vector_temp.push_back(temp_tile);
     }
     BoardData board_temp(vector_temp);
-    board_data = board_temp;
+    board_data = board_temp;*/
 }
 
 void SnakesAndLaddersApp::draw() {
@@ -54,6 +65,24 @@ void SnakesAndLaddersApp::draw() {
     ci::gl::color(ci::Color("white"));
     ci::gl::draw(texture);
     //ci::gl::drawStringCentered(to_string(board.size()), glm::vec2(1, 1), ci::Color("black"));
+
+    // Draw initial pieces
+    if (!start) {
+        for (size_t i = 0; i < player_list.size(); i++) {
+            if (i == 0) {
+                ci::gl::draw(player1, player_list[i].GetPosition());
+            }
+            else if (i == 1) {
+                ci::gl::draw(player2, player_list[i].GetPosition());
+            }
+            else if (i == 2) {
+                ci::gl::draw(player3, player_list[i].GetPosition());
+            }
+            else if (i == 3) {
+                ci::gl::draw(player4, player_list[i].GetPosition());
+            }
+        }
+    }
 
     // Draw dice
     ci::gl::color(ci::Color("white"));
@@ -75,16 +104,31 @@ void SnakesAndLaddersApp::draw() {
     else if (dice == 6) {
         ci::gl::draw(dice6, glm::vec2(700, 600));
     }
+    string status;
     if (start) {
         ci::gl::drawStringCentered("You rolled " + to_string(dice) + "!", glm::vec2(750, 580), ci::Color("black"), kUiFont);
+        //status = game.run(dice);
     }
     ci::Rectf dice_outline(glm::vec2(700, 600), glm::vec2(800, 700));
     ci::gl::color(ci::Color("black"));
     ci::gl::drawStrokedRect(dice_outline);
 
-    string status = game.run(dice);
-
-    //ci::gl::drawLine(glm::vec2(700, 700), glm::vec2(800, 700));
+    vector<Player> player_list = game.GetPlayerList();
+    ci::gl::color(ci::Color("white"));
+    for (size_t i = 0; i < player_list.size(); i++) {
+        if (i == 0) {
+            ci::gl::draw(player1, player_list[i].GetPosition());
+        }
+        else if (i == 1) {
+            ci::gl::draw(player2, player_list[i].GetPosition());
+        }
+        else if (i == 2) {
+            ci::gl::draw(player3, player_list[i].GetPosition());
+        }
+        else if (i == 3) {
+            ci::gl::draw(player4, player_list[i].GetPosition());
+        }
+    }
 }
 
 int SnakesAndLaddersApp::RollDice() {

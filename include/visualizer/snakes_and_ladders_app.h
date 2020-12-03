@@ -45,8 +45,8 @@ private:
     string kImagePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\snlboard2.png";
     string kFilePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\BoardInfo.json";
     ci::gl::Texture2dRef texture;
-    json board;
-    BoardData board_data;
+    //json board;
+    //BoardData board_data;
     bool start = false;
     int player = 1;
     int dice = 1;
@@ -62,6 +62,14 @@ private:
     ci::gl::Texture2dRef dice4;
     ci::gl::Texture2dRef dice5;
     ci::gl::Texture2dRef dice6;
+    string kPlayer1 = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\player1.png";
+    string kPlayer2 = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\player2.png";
+    string kPlayer3 = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\player3.png";
+    string kPlayer4 = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\player4.png";
+    ci::gl::Texture2dRef player1;
+    ci::gl::Texture2dRef player2;
+    ci::gl::Texture2dRef player3;
+    ci::gl::Texture2dRef player4;
 };
 
 }  // namespace visualizer

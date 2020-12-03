@@ -4,6 +4,7 @@
 #include "../../include/core/board_data.h"
 #include "../../include/core/tile_data.h"
 #include "../../include/core/player.h"
+#include "cinder/gl/gl.h"
 #include <algorithm>
 #include <math.h>
 #include <string>
@@ -34,6 +35,14 @@ public:
      * @return string of player's move
      */
     string run(int dice);
+
+    /**
+     * Getter for player list
+     * @return player_list
+     */
+    vector<Player> GetPlayerList();
+
+    void LoadPlayer(int num_players);
 
 private:
     /**

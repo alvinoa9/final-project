@@ -12,16 +12,16 @@ Player::Player(int num) {
     player_num = num;
     tile = 1;
     if (num == 1) {
-        position = glm::vec2(35, 70);
+        position = glm::vec2(37, 601);
     }
     else if (num == 2) {
-        position = glm::vec2(35, 35);
+        position = glm::vec2(37, 636);
     }
     else if (num == 3) {
-        position = glm::vec2(0, 70);
+        position = glm::vec2(2, 601);
     }
     else if (num == 4) {
-        position = glm::vec2(0, 0);
+        position = glm::vec2(2, 636);
     }
 }
 

@@ -64,15 +64,17 @@ private:
     void DrawGamePiece(vector<Player> players);
 
     Board board_;
+    vector<GameEngine> instance;
     int state = 0;
     GameEngine game;
+    bool start = false;
+    int player = 0;
+    int dice = 1;
     string status = "";
+
     string kImagePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\snlboard2.png";
     string kFilePath = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\BoardInfo.json";
     ci::gl::Texture2dRef texture;
-    bool start = false;
-    int player = 1;
-    int dice = 1;
     string kDice1 = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\dice1.jpg";
     string kDice2 = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\dice2.jpg";
     string kDice3 = "C:\\Users\\alvin\\CLionProjects\\~Cinder\\my-projects\\final-project\\data\\dice3.jpg";

@@ -16,6 +16,14 @@ GameEngine::GameEngine(int num_players) {
     }
 }
 
+void GameEngine::LoadPlayer(int num_players) {
+    total_player = num_players;
+    for (int i = 0; i < num_players; i++) {
+        Player player_temp(i + 1);
+        player_list.push_back(player_temp);
+    }
+}
+
 void GameEngine::JSONDeserialize() {
     // Deserialize json file
     ifstream file(kFilePath);

@@ -32,7 +32,20 @@ void Board::DrawMainMenu() const {
 }
 
 void Board::DrawPlayerPick() const {
+    ci::gl::color(ci::Color8u(215, 10, 111));
+    ci::gl::drawSolidCircle(kCircle1, (float) kRadius);
+    ci::gl::color(ci::Color8u(11, 190, 214));
+    ci::gl::drawSolidCircle(kCircle2, (float) kRadius);
+    ci::gl::color(ci::Color8u(150, 217, 11));
+    ci::gl::drawSolidCircle(kCircle3, (float) kRadius);
+    ci::gl::color(ci::Color8u(243, 239, 10));
+    ci::gl::drawSolidCircle(kCircle4, (float) kRadius);
 
+    ci::gl::drawStringCentered("Start Game", glm::vec2(400, 180), ci::Color("black"), ci::Font("Arial", 60));
+    ci::gl::drawStringCentered("1p", glm::vec2(100, 300), ci::Color("black"), kChoiceFont);
+    ci::gl::drawStringCentered("2p", glm::vec2(300, 300), ci::Color("black"), kChoiceFont);
+    ci::gl::drawStringCentered("3p", glm::vec2(500, 300), ci::Color("black"), kChoiceFont);
+    ci::gl::drawStringCentered("4p", glm::vec2(700, 300), ci::Color("black"), kChoiceFont);
 }
 
 void Board::DrawLoadMenu() const{
@@ -40,7 +53,7 @@ void Board::DrawLoadMenu() const{
 }
 
 
-void Board::Click(const glm::vec2 &mouse_coords) {
+int Board::Click(const glm::vec2 &mouse_coords) {
     if (state == 0) {
         if (mouse_coords.x >= 285 && mouse_coords.x <= 515 && mouse_coords.y >= 180 && mouse_coords.y <= 250) {
             state = 1;
@@ -48,13 +61,31 @@ void Board::Click(const glm::vec2 &mouse_coords) {
         else if (mouse_coords.x >= 285 && mouse_coords.x <= 515 && mouse_coords.y >= 285 && mouse_coords.y <= 450) {
             state = 2;
         }
+        return 0;
     }
-    else if (state = 1) {
+    else if (state == 1) {
+        if (glm::distance(mouse_coords, kCircle1) <= kRadius) {
+            state = 3;
+            return 1;
+        }
+        else if (glm::distance(mouse_coords, kCircle2) <= kRadius) {
+            state = 3;
+            return 2;
+        }
+        else if (glm::distance(mouse_coords, kCircle3) <= kRadius) {
+            state = 3;
+            return 3;
+        }
+        else if (glm::distance(mouse_coords, kCircle4) <= kRadius) {
+            state = 3;
+            return 4;
+        }
+        return 0;
+    }
+    return 0;
+    /*else if (state == 2) {
 
-    }
-    else if (state = 2) {
-
-    }
+    }*/
 }
 
 int Board::GetState() {

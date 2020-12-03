@@ -47,20 +47,24 @@ void SnakesAndLaddersApp::draw() {
     // Draw Background
     ci::Color background_color("white");
     ci::gl::clear(background_color);
-    board_.Draw();
-    // Draw board
-    //ci::gl::color(ci::Color("white"));
-    //ci::gl::draw(texture);
-    //ci::gl::drawStringCentered(to_string(board.size()), glm::vec2(1, 1), ci::Color("black"));
+    if (state < 3) {
+        board_.Draw();
+    }
+    else {
+        // Draw board
+        ci::gl::color(ci::Color("white"));
+        ci::gl::draw(texture);
+        //ci::gl::drawStringCentered(to_string(board.size()), glm::vec2(1, 1), ci::Color("black"));
 
-    // Draw dice
-    //DrawDice(dice);
+        // Draw dice
+        DrawDice(dice);
 
-    // Draw Players
-    //DrawGamePiece(game.GetPlayerList());
-
+        // Draw Players
+        DrawGamePiece(game.GetPlayerList());
+    }
 
     //ci::gl::drawString(status, glm::vec2(0, 0), ci::Color("black"), kUiFont);
+    state = board_.GetState();
 }
 
 int SnakesAndLaddersApp::RollDice() {
@@ -83,6 +87,12 @@ void SnakesAndLaddersApp::keyDown(ci::app::KeyEvent event) {
 }
 
 void SnakesAndLaddersApp::mouseDown(ci::app::MouseEvent event) {
+    if (player == 0) {
+        player = board_.Click(event.getPos());
+        if (player > 0) {
+            game.LoadPlayer(player);
+        }
+    }
     if (event.getPos().x >= 700 && event.getPos().y >= 600) {
         start = true;
         dice = RollDice();

@@ -29,6 +29,8 @@ public:
      */
     GameEngine(int num_players);
 
+    void LoadPlayer(int num_players);
+
     /**
      * Runs the game
      * @param dice moves of player

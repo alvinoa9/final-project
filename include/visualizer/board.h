@@ -30,8 +30,9 @@ public :
     /**
      * Make certain parts of window clickable depending on screen instance
      * @param mouse_coords the screen coordinates of mouse
+     * @return number of players
      */
-    void Click(const glm::vec2& mouse_coords);
+    int Click(const glm::vec2& mouse_coords);
 
     /**
      * Getter for screen's state
@@ -66,6 +67,12 @@ private:
      */
     int state = 0;
     const ci::Font kUiFont = ci::Font("Arial", 40);
+    const ci::Font kChoiceFont = ci::Font("Arial", 50);
+    const int kRadius = 75;
+    glm::vec2 kCircle1 = glm::vec2(100, 320);
+    glm::vec2 kCircle2 = glm::vec2(300, 320);
+    glm::vec2 kCircle3 = glm::vec2(500, 320);
+    glm::vec2 kCircle4 = glm::vec2(700, 320);
 };
 
 }   // namespace snakeladder

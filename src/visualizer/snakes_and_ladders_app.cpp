@@ -96,6 +96,7 @@ void SnakesAndLaddersApp::mouseDown(ci::app::MouseEvent event) {
     if (player == 0) {
         player = board_.Click(event.getPos());
         if (player > 0) {
+            game_instance++;
             game.LoadPlayer(player);
         }
     }
@@ -117,7 +118,7 @@ void SnakesAndLaddersApp::mouseDown(ci::app::MouseEvent event) {
     // Save Game
     if (event.getPos().x >= 700 && event.getPos().x <= 800 &&
         event.getPos().y >= 40 && event.getPos().y < 80 && state == 3) {
-        if (instance.size() + 1 > 4) {
+        if (instance.size() + 1 > 4 && !ingame_status) {
             //overwrite gamefile
             //Board::DrawLoadMenu();
             //state = 4;
@@ -135,7 +136,7 @@ void SnakesAndLaddersApp::mouseDown(ci::app::MouseEvent event) {
         glm::vec2 box_top_left(250, 75);
         glm::vec2 box_bottom_right(550, 175);
         glm::vec2 spacing(0, 150);
-        int save;
+        int save = -1;
 
         for (size_t i = 0; i < 4; i++) {
             if (event.getPos().x >= box_top_left.x && event.getPos().x <= box_bottom_right.x &&
@@ -145,12 +146,14 @@ void SnakesAndLaddersApp::mouseDown(ci::app::MouseEvent event) {
             box_top_left += spacing;
             box_bottom_right += spacing;
         }
-        if (overwrite) {
-            instance[save] = game;
-            overwrite = false;
-        }
+        if (save != -1) {
+            game_instance = save;
+            if (overwrite) {
+                instance[save] = game;
+                overwrite = false;
+            }
             LoadGame(save);
-
+        }
     }
 
 }

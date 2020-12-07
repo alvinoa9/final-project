@@ -38,6 +38,7 @@ public:
     const double kWindowHeight = 700;
     const size_t kMargin = 50;
     const ci::Font kUiFont = ci::Font("Arial", 22);
+    const ci::Font kLoadFont = ci::Font("Arial", 50);
 
 private:
     /**
@@ -55,7 +56,7 @@ private:
      * Draws dice
      * @param dice number rolled
      */
-    void DrawDice(int dice);
+    void DrawDice(int roll);
 
     /**
      * Draws players
@@ -63,8 +64,31 @@ private:
      */
     void DrawGamePiece(vector<Player> players);
 
+    /**
+     * Draws save and main menu button on game
+     */
+    void DrawButton();
+
+    /**
+     * Draw saved games
+     */
+    void DrawInstances();
+
+    /**
+     * Saves game
+     */
+    void SaveGame();
+
+    /**
+     * Loads game
+     */
+    void LoadGame(int save);
+
     Board board_;
     vector<GameEngine> instance;
+    int game_instance = 0;
+    bool ingame_status = false;
+    bool overwrite = false;
     int state = 0;
     GameEngine game;
     bool start = false;

@@ -48,8 +48,20 @@ void Board::DrawPlayerPick() const {
     ci::gl::drawStringCentered("4p", glm::vec2(700, 300), ci::Color("black"), kChoiceFont);
 }
 
-void Board::DrawLoadMenu() const{
-
+void Board::DrawLoadMenu() {
+    glm::vec2 box_top_left(250, 75);
+    glm::vec2 box_bottom_right(550, 175);
+    glm::vec2 spacing(0, 150);
+    ci::Rectf outline(box_top_left, box_bottom_right);
+    for (int i = 0; i < 4; i++) {
+        ci::gl::color(ci::Color("grey"));
+        ci::gl::drawSolidRect(outline);
+        ci::gl::color(ci::Color("black"));
+        ci::gl::drawStrokedRect(outline);
+        box_top_left += spacing;
+        box_bottom_right += spacing;
+        outline = ci::Rectf(box_top_left, box_bottom_right);
+    }
 }
 
 
@@ -83,13 +95,14 @@ int Board::Click(const glm::vec2 &mouse_coords) {
         return 0;
     }
     return 0;
-    /*else if (state == 2) {
-
-    }*/
 }
 
-int Board::GetState() {
+int Board::GetState() const {
     return state;
+}
+
+void Board::SetState(int new_state) {
+    state = new_state;
 }
 
 }   // namespace snakeladder

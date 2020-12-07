@@ -38,9 +38,13 @@ public :
      * Getter for screen's state
      * @return state of screen
      */
-    int GetState();
+    int GetState() const;
 
-private:
+    /**
+     * Set screen's state
+     */
+    void SetState(int new_state);
+
     /**
      * Draws main menu on screen
      */
@@ -54,8 +58,9 @@ private:
     /**
      * Draws load menu on screen
      */
-    void DrawLoadMenu() const;
+    static void DrawLoadMenu() ;
 
+private:
     double kWindowWidth;
     double kWindowHeight;
 
@@ -64,6 +69,7 @@ private:
      * State = 1 -> Pick Players
      * State = 2 -> Load Menu
      * State = 3 -> Game
+     * State = 4 -> Overwrite save file
      */
     int state = 0;
     const ci::Font kUiFont = ci::Font("Arial", 40);

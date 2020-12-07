@@ -63,7 +63,6 @@ void SnakesAndLaddersApp::draw() {
         // Draw board
         ci::gl::color(ci::Color("white"));
         ci::gl::draw(texture);
-        //ci::gl::drawStringCentered(to_string(board.size()), glm::vec2(1, 1), ci::Color("black"));
 
         // Draw dice
         DrawDice(dice);
@@ -72,7 +71,6 @@ void SnakesAndLaddersApp::draw() {
         DrawGamePiece(game.GetPlayerList());
     }
 
-    //ci::gl::drawString(status, glm::vec2(0, 0), ci::Color("black"), kUiFont);
     state = board_.GetState();
 }
 
@@ -119,10 +117,6 @@ void SnakesAndLaddersApp::mouseDown(ci::app::MouseEvent event) {
     if (event.getPos().x >= 700 && event.getPos().x <= 800 &&
         event.getPos().y >= 40 && event.getPos().y < 80 && state == 3) {
         if (instance.size() + 1 > 4 && !ingame_status) {
-            //overwrite gamefile
-            //Board::DrawLoadMenu();
-            //state = 4;
-            //board_.SetState(4);
             overwrite = true;
             state = 2;
             board_.SetState(2);

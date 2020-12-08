@@ -134,7 +134,8 @@ void SnakesAndLaddersApp::mouseDown(ci::app::MouseEvent event) {
 
         for (size_t i = 0; i < 4; i++) {
             if (event.getPos().x >= box_top_left.x && event.getPos().x <= box_bottom_right.x &&
-                event.getPos().y >= box_top_left.y && event.getPos().y <= box_bottom_right.y) {
+                event.getPos().y >= box_top_left.y && event.getPos().y <= box_bottom_right.y &&
+                i < instance.size()) {
                 save = i;
             }
             box_top_left += spacing;

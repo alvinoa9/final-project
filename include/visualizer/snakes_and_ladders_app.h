@@ -86,7 +86,7 @@ private:
 
     Board board_;
     vector<GameEngine> instance;
-    int game_instance = 0;
+    int game_instance = -1;
     bool ingame_status = false;
     bool overwrite = false;
     int state = 0;

@@ -69,11 +69,11 @@ private:
      * State = 1 -> Pick Players
      * State = 2 -> Load Menu
      * State = 3 -> Game
-     * State = 4 -> Overwrite save file
      */
     int state = 0;
     const ci::Font kUiFont = ci::Font("Arial", 40);
     const ci::Font kChoiceFont = ci::Font("Arial", 50);
+    const ci::Font kTitleFont = ci::Font("Arial", 60);
     const int kRadius = 75;
     glm::vec2 kCircle1 = glm::vec2(100, 320);
     glm::vec2 kCircle2 = glm::vec2(300, 320);

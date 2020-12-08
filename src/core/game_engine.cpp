@@ -95,6 +95,10 @@ vector<Player> GameEngine::GetPlayerList() {
     return player_list;
 }
 
+vector<TileData> GameEngine::GetTileData() {
+    return tile_data;
+}
+
 glm::vec2 GameEngine::MoveDown(int tile, int move, glm::vec2 position) {
     for (int i = tile - 1; i >= move; --i) {
         if (i % 10 == 0) {

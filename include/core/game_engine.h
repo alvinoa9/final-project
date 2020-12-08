@@ -44,6 +44,12 @@ public:
      */
     vector<Player> GetPlayerList();
 
+    /**
+     * Getter for vector containing the board data
+     * @return tile_data
+     */
+    vector<TileData> GetTileData();
+
 private:
     /**
      * Deserialize json file

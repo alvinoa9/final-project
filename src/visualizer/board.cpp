@@ -21,6 +21,7 @@ void Board::Draw() const {
 }
 
 void Board::DrawMainMenu() const {
+    ci::gl::drawStringCentered("Snakes and Ladders", glm::vec2(400, 70), ci::Color("black"), kTitleFont);
     ci::gl::drawStringCentered("New Game", glm::vec2(400, 200), ci::Color("black"), kUiFont);
     ci::gl::drawStringCentered("Load Game", glm::vec2(400, 400), ci::Color("black"), kUiFont);
     ci::Rectf outline1(glm::vec2(285, 180), glm::vec2(515, 250));
@@ -41,7 +42,7 @@ void Board::DrawPlayerPick() const {
     ci::gl::color(ci::Color8u(243, 239, 10));
     ci::gl::drawSolidCircle(kCircle4, (float) kRadius);
 
-    ci::gl::drawStringCentered("Start Game", glm::vec2(400, 180), ci::Color("black"), ci::Font("Arial", 60));
+    ci::gl::drawStringCentered("Start Game", glm::vec2(400, 170), ci::Color("black"), ci::Font("Arial", 60));
     ci::gl::drawStringCentered("1p", glm::vec2(100, 300), ci::Color("black"), kChoiceFont);
     ci::gl::drawStringCentered("2p", glm::vec2(300, 300), ci::Color("black"), kChoiceFont);
     ci::gl::drawStringCentered("3p", glm::vec2(500, 300), ci::Color("black"), kChoiceFont);
@@ -70,7 +71,7 @@ int Board::Click(const glm::vec2 &mouse_coords) {
         if (mouse_coords.x >= 285 && mouse_coords.x <= 515 && mouse_coords.y >= 180 && mouse_coords.y <= 250) {
             state = 1;
         }
-        else if (mouse_coords.x >= 285 && mouse_coords.x <= 515 && mouse_coords.y >= 285 && mouse_coords.y <= 450) {
+        else if (mouse_coords.x >= 285 && mouse_coords.x <= 515 && mouse_coords.y >= 380 && mouse_coords.y <= 450) {
             state = 2;
         }
         return 0;
